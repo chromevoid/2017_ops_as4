@@ -6,7 +6,6 @@ import os
 import random
 
 cgitb.enable()
-form = cgi.FieldStorage
 
 
 def present_quiz():
@@ -52,7 +51,7 @@ def present_quiz():
     print "<body>"
 
     print "<h1>MTA Subway Quiz</h1>"
-    print "<form method=GET action=\"MTAquiz.cgi\">"
+    print "<form method=\"get\" action=\"MTAquiz.cgi\">"
 
     for i in range(0, 5):
         print "<p>Question " + str(i+1) + ": Which line stops at <strong>" + station_names[i] + "</strong>?</p>"
@@ -69,19 +68,17 @@ def present_quiz():
         print "<input type=\"hidden\" name=\"a" + str(i+1) + "\" value=\"" + answers[i] + "\">"
         print "<hr>"
 
-    print "<input type=submit value=\"submit\" name=\"submit\">"
+    print "<input type=\"submit\" value=\"submit\" name=\"submit\">"
     print "</form>"
     print "</body>"
     print "</html>"
 
 
 def grade_answer():
-    # stations = [form['s1'].value]
-    # correct_answers = [form['a1'].value]
-    # user_answers = [form['q1'].value]
-    stations = ["1", "2"]
-    correct_answers = ["A", "B"]
-    user_answers = ["A", "A"]
+    form = cgi.FieldStorage()
+    stations = [form['s1'].value, form['s2'].value, form['s3'].value, form['s4'].value, form['s5'].value]
+    correct_answers = [form['a1'].value, form['a2'].value, form['a3'].value, form['a4'].value, form['a5'].value]
+    user_answers = [form['q1'].value, form['q2'].value, form['q3'].value, form['q4'].value, form['q5'].value]
     grade = 0
     correct = []
     incorrect = []
