@@ -76,35 +76,47 @@ def present_quiz():
 
 def grade_answer():
     form = cgi.FieldStorage()
-    stations = [form['s1'].value, form['s2'].value, form['s3'].value, form['s4'].value, form['s5'].value]
-    correct_answers = [form['a1'].value, form['a2'].value, form['a3'].value, form['a4'].value, form['a5'].value]
-    user_answers = [form['q1'].value, form['q2'].value, form['q3'].value, form['q4'].value, form['q5'].value]
-    grade = 0
-    correct = []
-    incorrect = []
-    for i in range(0, len(correct_answers)):
-        if correct_answers[i] == user_answers[i]:
-            grade += 1
-            correct.append(stations[i])
-        else:
-            incorrect.append(stations[i])
-    grade = grade * 100 / len(correct_answers)
-    print "Content-type: text/html"
-    print
-    print "<html>"
-    print "<head>"
-    print "<title>MTA Subway Quiz Grading</title>"
-    print "</head>"
-    print "<body>"
-    print "<h2>Your Score: " + str(grade) + "%</h2>"
-    print "<h3>Correct answers</h3>"
-    for element in correct:
-        print "<p style=\"color: green\">" + str(element) + "</p>"
-    print "<h3>Incorrect answers</h3>"
-    for element in incorrect:
-        print "<p style=\"color: red\">" + str(element) + "</p>"
-    print "</body>"
-    print "</html>"
+    if len(form) < 16:
+        print "Content-type: text/html"
+        print
+        print "<html>"
+        print "<head>"
+        print "<title>MTA Subway Quiz Grading</title>"
+        print "</head>"
+        print "<body>"
+        print "<p>Please answer all the questions</p>"
+        print "</body>"
+        print "</html>"
+    else:
+        stations = [form['s1'].value, form['s2'].value, form['s3'].value, form['s4'].value, form['s5'].value]
+        correct_answers = [form['a1'].value, form['a2'].value, form['a3'].value, form['a4'].value, form['a5'].value]
+        user_answers = [form['q1'].value, form['q2'].value, form['q3'].value, form['q4'].value, form['q5'].value]
+        grade = 0
+        correct = []
+        incorrect = []
+        for i in range(0, len(correct_answers)):
+            if correct_answers[i] == user_answers[i]:
+                grade += 1
+                correct.append(stations[i])
+            else:
+                incorrect.append(stations[i])
+        grade = grade * 100 / len(correct_answers)
+        print "Content-type: text/html"
+        print
+        print "<html>"
+        print "<head>"
+        print "<title>MTA Subway Quiz Grading</title>"
+        print "</head>"
+        print "<body>"
+        print "<h2>Your Score: " + str(grade) + "%</h2>"
+        print "<h3>Correct answers</h3>"
+        for element in correct:
+            print "<p style=\"color: green\">" + str(element) + "</p>"
+        print "<h3>Incorrect answers</h3>"
+        for element in incorrect:
+            print "<p style=\"color: red\">" + str(element) + "</p>"
+        print "</body>"
+        print "</html>"
 
 
 query = os.environ["QUERY_STRING"]
